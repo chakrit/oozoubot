@@ -7,9 +7,13 @@ module.exports = (robot) ->
       db.left   = 0
       db.ordering = false
 
-  robot.respond /(.* )?lunch ((@\S+\s*)+)/i, (msg) ->
+  robot.respond /(.* )?lunch (with:? )?((@\S+\s*)+)/i, (msg) ->
     db = robot.brain.data.lunch
-    db.people = (name.toLowerCase() for name in msg.match[2].trim().split /\s+/)
+    people = (name.toLowerCase() for name in msg.match[3].trim().split /\s+/)
+    if people.length == 0
+      msg.send "Can you let me know who's in the office today?"
+      return
+    db.people = people
     db.orders = {}
     db.left   = db.people.length
     db.ordering = true
@@ -49,3 +53,4 @@ module.exports = (robot) ->
     unordered = for name in db.people
       "#{name}: STILL WAITING"
     msg.send ordered.join("\n") + "\n" + unordered.join("\n")
+    return
