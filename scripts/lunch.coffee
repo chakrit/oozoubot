@@ -11,7 +11,7 @@ module.exports = (robot) ->
     ordering = true
     msg.send "Hear, hear, let's get rolling"
 
-  robot.respond /I'll have (.+)(,? please!*)?$/i, (msg) ->
+  robot.respond /I'll have (.+)?/i, (msg) ->
     unless ordering
       msg.send "What am I, a waiter?"
       return
