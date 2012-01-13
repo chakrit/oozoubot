@@ -7,13 +7,9 @@ module.exports = (robot) ->
       db.left   = 0
       db.ordering = false
 
-  robot.respond /(.* )?lunch( with:?)?((\s*@\S+)*)/i, (msg) ->
+  robot.respond /(.* )?lunch with: ((@\S+\s*)+)/i, (msg) ->
     db = robot.brain.data.lunch
-    people = (name.toLowerCase() for name in msg.match[3].trim().split /\s+/)
-    if people.length == 0
-      msg.send "Can you let me know who's in the office today?"
-      return
-    db.people = people
+    db.people = (name.toLowerCase() for name in msg.match[2].trim().split /\s+/)
     db.orders = {}
     db.left   = db.people.length
     db.ordering = true
