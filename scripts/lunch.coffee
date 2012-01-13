@@ -1,11 +1,13 @@
 module.exports = (robot) ->
-  db = robot.brain.data.lunch
-  db.people = []
-  db.orders = {}
-  db.left   = 0
-  db.ordering = false
+  robot.brain.on 'loaded', =>
+    db = robot.brain.data.lunch = {}
+    db.people = []
+    db.orders = {}
+    db.left   = 0
+    db.ordering = false
 
   robot.respond /(.* )?lunch ((@\S+\s+?)+)/i, (msg) ->
+    db = robot.brain.data.lunch
     db.people = msg.match[1].split /\s+/
     db.orders = {}
     db.left   = db.people.length
@@ -14,6 +16,7 @@ module.exports = (robot) ->
     return
 
   robot.respond /I'll have (.+)/i, (msg) ->
+    db = robot.brain.data.lunch
     unless db.ordering
       msg.send "What am I, a waiter?"
       return
