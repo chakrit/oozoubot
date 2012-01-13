@@ -4,15 +4,17 @@ module.exports = (robot) ->
   left   = 0
   ordering = false
 
-  robot.respond /lunch ((@\S+\s+?)+)/i, (msg) ->
+  robot.respond /(.* )?lunch ((@\S+\s+?)+)/i, (msg) ->
     people = msg.match[1].split /\s+/
     orders = {}
     left   = people.length
     ordering = true
     msg.send "Hear, hear, let's get rolling"
 
-  robot.respond /^I'll have (.+)(,? please!*)?$/i, (msg) ->
-    return unless ordering
+  robot.respond /I'll have (.+)(,? please!*)?$/i, (msg) ->
+    unless ordering
+      msg.send "What am I, a waiter?"
+      return
     orders[msg.message.user.name] = msg.match[1]
     people = person for person in people when person isnt msg.message.user.name
     left   = people.length
