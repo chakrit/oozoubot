@@ -23,7 +23,7 @@ module.exports = (robot) ->
     db.orders[msg.message.user.name] = msg.match[1]
     db.people = person for person in db.people when person isnt msg.message.user.name
     db.left   = db.people.length
-    switch left
+    switch db.left
       when 0
         output = for name, order of db.orders
           "#{name}: #{order}"
