@@ -48,4 +48,4 @@ module.exports = (robot) ->
       "#{name}: #{order}"
     unordered = for name in db.people
       "#{name}: STILL WAITING"
-    msg.send output.join("\n") + "\n" + unordered.join("\n")
+    msg.send ordered.join("\n") + "\n" + unordered.join("\n")
