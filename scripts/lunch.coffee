@@ -13,7 +13,7 @@ module.exports = (robot) ->
     db.orders = {}
     db.left   = db.people.length
     db.ordering = true
-    msg.send "Hear, hear, let's get rolling #{db.people.join ' and '}"
+    msg.send "Hear, hear, let's get rolling"
     return
 
   robot.respond /I'll have (.+)/i, (msg) ->
