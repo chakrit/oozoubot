@@ -8,7 +8,7 @@ module.exports = (robot) ->
 
   robot.respond /(.* )?lunch ((@\S+\s+?)+)/i, (msg) ->
     db = robot.brain.data.lunch
-    db.people = msg.match[1].split /\s+/
+    db.people = (name.toLowerCase() for name in msg.match[1].split /\s+/)
     db.orders = {}
     db.left   = db.people.length
     db.ordering = true
@@ -20,8 +20,9 @@ module.exports = (robot) ->
     unless db.ordering
       msg.send "What am I, a waiter?"
       return
-    db.orders[msg.message.user.name] = msg.match[1]
-    db.people = person for person in db.people when person isnt msg.message.user.name
+    name      = msg.message.user.name.split(' ')[0].toLowerCase()
+    db.orders[name] = msg.match[1]
+    db.people = (person for person in db.people when person isnt name)
     db.left   = db.people.length
     switch db.left
       when 0
