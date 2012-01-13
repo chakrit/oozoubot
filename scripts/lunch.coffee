@@ -1,10 +1,11 @@
 module.exports = (robot) ->
   robot.brain.on 'loaded', =>
-    db = robot.brain.data.lunch = {}
-    db.people = []
-    db.orders = {}
-    db.left   = 0
-    db.ordering = false
+    unless robot.brain.data.lunch?
+      db = robot.brain.data.lunch = {}
+      db.people = []
+      db.orders = {}
+      db.left   = 0
+      db.ordering = false
 
   robot.respond /(.* )?lunch ((@\S+\s*)+)/i, (msg) ->
     db = robot.brain.data.lunch
@@ -37,3 +38,14 @@ module.exports = (robot) ->
       else
         msg.send "#{db.left} orders to go"
     return
+
+  robot.respond /What are we ordering/i, (msg) ->
+    db = robot.brain.data.lunch
+    unless db.ordering
+      msg.send "Nothing as far as I'm concerned"
+      return
+    ordered = for name, order of db.orders
+      "#{name}: #{order}"
+    unordered = for name in db.people
+      "#{name}: STILL WAITING"
+    msg.send output.join("\n") + "\n" + unordered.join("\n")
