@@ -6,7 +6,7 @@ module.exports = (robot) ->
     db.left   = 0
     db.ordering = false
 
-  robot.respond /(.* )?lunch ((@\S+\s+?)+)/i, (msg) ->
+  robot.respond /(.* )?lunch ((@\S+\s*)+)/i, (msg) ->
     db = robot.brain.data.lunch
     db.people = (name.toLowerCase() for name in msg.match[2].split /\s+/)
     db.orders = {}
