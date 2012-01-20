@@ -7,19 +7,23 @@ module.exports = (robot) ->
       db.left   = 0
       db.ordering = false
 
-  robot.respond /(.* )?lunch with: ((@\S+\s*)+)/i, (msg) ->
+  robot.respond /friday lunch:?((\s+@\S+)*)\s*/i, (msg) ->
     db = robot.brain.data.lunch
     db.people = (name.toLowerCase() for name in msg.match[2].trim().split /\s+/)
+    if db.people.length == 1 and db.people[0] == '':
+      db.ordering = false
+      msg.send "The correct syntax is: friday lunch <list of participants>"
+      return
     db.orders = {}
     db.left   = db.people.length
     db.ordering = true
-    msg.send "Hear, hear, let's get rolling"
+    msg.send "What will you guys have? Say I'll have <dish>"
     return
 
   robot.respond /I'll have (.+)/i, (msg) ->
     db = robot.brain.data.lunch
     unless db.ordering
-      msg.send "What am I, a waiter?"
+      msg.send "I don't recall you are having lunch right now"
       return
     name      = '@' + msg.message.user.name.split(' ')[0].toLowerCase()
     db.orders[name] = msg.match[1]
@@ -39,7 +43,7 @@ module.exports = (robot) ->
         msg.send "#{db.left} orders to go"
     return
 
-  robot.respond /What are we ordering/i, (msg) ->
+  robot.respond /What are we (ordering|having|eating)/i, (msg) ->
     db = robot.brain.data.lunch
     unless db.ordering
       msg.send "Nothing as far as I'm concerned"
