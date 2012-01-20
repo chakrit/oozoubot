@@ -10,7 +10,7 @@ module.exports = (robot) ->
   robot.respond /friday lunch:?((\s+@\S+)*)\s*/i, (msg) ->
     db = robot.brain.data.lunch
     db.people = (name.toLowerCase() for name in msg.match[2].trim().split /\s+/)
-    if db.people.length == 1 and db.people[0] == '':
+    if db.people.length == 1 and db.people[0] == ''
       db.ordering = false
       msg.send "The correct syntax is: friday lunch <list of participants>"
       return
