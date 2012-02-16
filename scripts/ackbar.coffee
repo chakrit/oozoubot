@@ -18,5 +18,5 @@ ackbars = [
 ]
 
 module.exports = (robot) ->
-  robot.hear /.*( trap).*/i, (msg) ->
+  robot.hear /.*( trap ).*/i, (msg) ->
     msg.send msg.random ackbars
