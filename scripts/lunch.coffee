@@ -20,6 +20,15 @@ module.exports = (robot) ->
     msg.send "What will you guys have? Say I'll have <dish>"
     return
 
+  robot.respond /include (.+) for lunch/i, (msg) ->
+    db = robot.brain.data.lunch
+    unless db.ordering
+      return msg.send "We are not having lunch soon, are we?"
+
+    additions = (name.toLowerCase() for name in msg.match[1].trim().split /\s+/)
+    db.people.push.apply db.people, additions
+    return msg.send "Added #{additions.length} people. Say I'll have <dish> to order!"
+
   robot.respond /I'll have (.+)/i, (msg) ->
     db = robot.brain.data.lunch
     unless db.ordering
