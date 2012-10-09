@@ -5,12 +5,11 @@ var _ = require('underscore')
   , detective = require('detective')
   , files = fs.readdirSync('scripts');
 
-// string utils
+// filter only js files
 var stringEndsWith = function(str, suffix) {
   return str.indexOf(suffix, str.length - suffix.length) !== -1;
 };
 
-// filter only js files
 files = _(files).reject(function(file) {
   return !stringEndsWith(file, '.js');
 });
@@ -27,15 +26,22 @@ for (var i in files) {
 
 requires.sort();
 requires = _(requires).uniq();
-for (var i in requires) {
+
+
+// test for existing dependencies
+requires = _(requires).reject(function(dep) {
   try {
-    require(requires[i]);
-    continue; // skip deps that already exists
+    require(dep);
+    return true;
   }
   catch (e) {
-    /* absorbed */
+    return false;
   }
+});
 
+
+// output to stdout
+for (var i in requires) {
   console.log(requires[i]);
 }
 
