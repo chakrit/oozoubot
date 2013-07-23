@@ -1,19 +1,18 @@
 #!/usr/bin/env make
 
-include Makefile.vars
-
 COFFEE := node_modules/.bin/coffee
 HUBOT  := node_modules/.bin/hubot
 
 
-ifeq ($(HUBOT_HIPCHAT_ROOMS),)
+ifeq ($(wildcard Makefile.vars),)
 default: node_modules init
+
 else
+include Makefile.vars
 default: node_modules start
+
 endif
 
-debug:
-	$(COFFEE) test.coffee
 
 init:
 	$(COFFEE) init.coffee
