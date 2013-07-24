@@ -14,6 +14,10 @@ module.exports = do ->
     'HUBOT_HIPCHAT_TOKEN'
     'HUBOT_MEMEGEN_USERNAME'
     'HUBOT_MEMEGEN_PASSWORD'
+    'OOZOU_WIFI'
+    'OOZOU_MACMINI'
+    'OOZOU_IMAC'
+    'OOZOU_TIMECAPSULE'
   ]
 
 
