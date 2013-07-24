@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.oozou.oozoubot</string>
+    <key>ProgramArguments</key>
+    <array>
+      <!--
+      NOTE: You need to link the oozoubot repository into global install by doing
+        `$ cd oozoubot; npm link` for this to work. This way we don't have to
+        hard code the specific oozoubot repository path into this file and can move it
+        anywhere we'd like it to be, we'd just need to update the globally linked
+        reference.
+    -->
+    <string>/usr/local/bin/node</string>
+    <string>/usr/local/bin/npm</string>
+    <string>start</string>
+    <string>-g</string>
+    <string>oozoubot</string>
+  </array>
+  <key>StandardErrorPath</key>
+  <string>/usr/local/var/oozoubot-stderr.log</string>
+  <key>StandardOutPath</key>
+  <string>/usr/local/var/oozoubot-stdout.log</string>
+  <key>WorkingDirectory</key>
+  <string>/usr/local/var</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key>
+    <string>/tmp</string>
+  </dict>
+  <key>OnDemand</key>
+  <false/>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <dict>
+    <key>SuccessfulExit</key>
+    <false/>
+  </dict>
+</dict>
+</plist>
