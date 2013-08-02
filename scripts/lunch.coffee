@@ -21,7 +21,7 @@ module.exports = (robot) ->
     return
 
   robot.respond /lunch list/i, (msg)->
-    oauth_token = process.env.HUBOT_HIPCHAT_LOBBY_ROOM
+    oauth_token = process.env.HUBOT_HIPCHAT_TOKEN
     msg.send 'Asking hipchat for user statuses ..'
     msg.http("https://api.hipchat.com/v1/users/list?format=json&auth_token=#{oauth_token}")
       .get() (err, res, body) ->
