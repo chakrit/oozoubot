@@ -59,3 +59,39 @@ module.exports = (robot) ->
           msg.send("(pivotal) #{ent.decode name}")
     ).on('error', (e) ->
       msg.send('problem with request: ' + e.message))
+
+
+  robot.hear /(https:\/\/www\.pivotaltracker\.com\/story\/show\/)(.+)/i, (msg) ->
+    projects = [
+      { id: 202387, name: 'xenapto' }
+      { id: 133661, name: 'AT' }
+      { id: 653125, name: 'fingi' }
+    ]
+    story_id = msg.match[2]
+
+    for project in projects
+      https = require('https')
+      options =
+        hostname: 'www.pivotaltracker.com'
+        path: "/services/v3/projects/#{project.id}/stories/#{story_id}"
+        method: 'GET'
+        headers:
+          'X-TrackerToken': process.env.HUBOT_PIVOTAL_TOKEN
+
+      https.get(options, (res) ->
+        res.setEncoding 'utf8'
+        res.on 'data', (data) ->
+          name = data.match(/<name>.+<\/name>/)
+          if (name)
+            name = name[0].match(/>.+</)[0]
+            name = name.slice(1).slice(0, -1)
+
+            ent = require 'ent'
+            msg.send("(pivotal) [#{project.name}] #{ent.decode name}")
+          # else # problem occurs
+          #   error = data.match(/<message>.+<\/message>/)
+          #   error = error[0].match(/>.+</)[0]
+          #   error = error.slice(1).slice(0, -1)
+          #   console.log error
+      ).on('error', (e) ->
+        msg.send('problem with request: ' + e.message))
