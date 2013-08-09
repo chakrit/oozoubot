@@ -59,7 +59,6 @@ module.exports = (robot) ->
     additions = (name.toLowerCase() for name in msg.match[1].trim().split /\s+/)
     for x in additions
       ind = db.people.indexOf.call db.people, x
-      msg.send ind
       if ind isnt -1
         db.people.splice.call db.people, ind, 1
         db.left -= 1
