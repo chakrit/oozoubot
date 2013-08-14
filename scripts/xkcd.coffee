@@ -35,7 +35,7 @@ module.exports = (robot) ->
     ).on('error', (e) ->
       msn.send("Got error: " + e.message))
 
-  robot.hear /(pivotaltracker\.com\/s\/projects\/)(.+)(\/stories\/)(.+)/ig, (msg) ->
+  robot.hear /(pivotaltracker\.com\/s\/projects\/)(.+)(\/stories\/)(.+)/i, (msg) ->
     project_id = msg.match[2]
     story_id = msg.match[4]
 
