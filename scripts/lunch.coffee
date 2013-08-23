@@ -99,8 +99,8 @@ module.exports = (robot) ->
       msg.send "Nothing as far as I'm concerned"
       return
     ordered = for name, order of db.orders
-      "#{name}: #{order}"
+      "#{name.substring(1)}: #{order}"
     unordered = for name in db.people
-      "#{name}: STILL WAITING"
+      "#{name.substring(1)}: STILL WAITING"
     msg.send ordered.join("\n") + "\n" + unordered.join("\n")
     return
