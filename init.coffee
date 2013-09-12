@@ -40,10 +40,14 @@ module.exports = do ->
     done = ->
       input.close()
 
-      content = "# Genereated by init.coffee, run `make init` to re-initialize.\r\n"
+      content = '# Genereated by init.coffee, run `make init` to re-initialize.\r\n'
+      content += '# For heroku, issue these commands:\r\n'
+      content += ("# heroku config:set #{v} \"#{value}\"" for v, value of values).join '\r\n'
+      content += '\r\n'
       content += ("#{v} := #{value}" for v, value of values).join '\r\n'
       content += '\r\n'
       content += ("export #{v}" for v of values).join '\r\n'
+      content += '\r\n'
       fs.writeFileSync (path.resolve __dirname, OUTFILE), content, encoding: 'utf-8'
 
 
