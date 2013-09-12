@@ -4,18 +4,21 @@ COFFEE := node_modules/.bin/coffee
 HUBOT  := node_modules/.bin/hubot
 
 
-ifeq ($(wildcard Makefile.vars),)
-default: node_modules init
-
-else
+ifneq ($(wildcard Makefile.vars),)
 include Makefile.vars
-default: node_modules start
+endif
 
+ifeq ($(OOZOUBOT2),)
+default: node_modules init
+else
+default: node_modules start
 endif
 
 
 init:
 	$(COFFEE) init.coffee
+	chmod +x heroku.bash
+	@echo "./heroku.bash # to initialize heroku variables."
 
 start:
 	$(HUBOT) --adapter hipchat
