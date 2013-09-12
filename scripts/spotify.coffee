@@ -7,7 +7,7 @@
 #   robot wrapper instead that always does this automatically.
 #   (also removes the need for bundleDependencies as well)
 
-_ = require 'underscore'
+_ = require 'lodash'
 a = require 'async'
 exec = require('child_process').exec
 spotify = require 'spotify'
