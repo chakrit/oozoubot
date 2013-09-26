@@ -33,7 +33,7 @@ module.exports = (robot) ->
           title = title.slice(1).slice(0, -1)
           msg.send(title)
     ).on('error', (e) ->
-      msn.send("Got error: " + e.message))
+      msg.send("Got error: " + e.message))
 
   robot.hear /(pivotaltracker\.com\/s\/projects\/)(.+)(\/stories\/)(.+)/i, (msg) ->
     project_id = msg.match[2]
