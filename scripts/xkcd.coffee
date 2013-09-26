@@ -31,7 +31,7 @@ module.exports = (robot) ->
         if (title)
           title = title[0].match(/>.+</)[0]
           title = title.slice(1).slice(0, -1)
-          msg.send(title)
+          msg.send("(oozou) #{title}")
     ).on('error', (e) ->
       msg.send("Got error: " + e.message))
 
