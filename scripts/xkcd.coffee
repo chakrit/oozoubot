@@ -20,11 +20,11 @@ module.exports = (robot) ->
           msg.send object.title
           msg.send object.img
 
-  robot.hear /(http:\/\/pantip.com\/topic\/)(.+)/i, (msg) ->
-    topic_id = msg.match[2]
+  robot.hear /(http[\:\/\w\-.]+)/i, (msg) ->
+    url = msg.match[1]
     http = require('http');
 
-    http.get("http://pantip.com/topic/#{topic_id}", (res) ->
+    http.get(url, (res) ->
       res.setEncoding('utf8')
       res.on 'data', (data) ->
         title = data.match(/<title>.+<\/title>/)
