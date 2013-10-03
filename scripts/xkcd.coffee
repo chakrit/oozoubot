@@ -24,7 +24,7 @@ module.exports = (robot) ->
     url = msg.match[1]
     http = if url.match(/^https/) then require('https') else require('http')
 
-    http.get(url, (res) ->
+    http.get url, (res) ->
       res.setEncoding('utf8')
       res.on 'data', (data) ->
         title = data.match(/<title>.+<\/title>/)
@@ -32,8 +32,8 @@ module.exports = (robot) ->
           title = title[0].match(/>.+</)[0]
           title = title.slice(1).slice(0, -1)
           msg.send("(oozou) #{title}")
-    ).on('error', (e) ->
-      msg.send("Got error: " + e.message))
+    .on 'error', (e) ->
+      console.log("Got error: " + e.message)
 
   robot.hear /(pivotaltracker\.com\/s\/projects\/)(.+)(\/stories\/)(.+)/i, (msg) ->
     project_id = msg.match[2]
