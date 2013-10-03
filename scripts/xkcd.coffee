@@ -22,8 +22,7 @@ module.exports = (robot) ->
 
   robot.hear /(http[\:\/\w\-.]+)/i, (msg) ->
     url = msg.match[1]
-    msg.send url
-    http = require('http');
+    http = if url.match(/^https/) then require('https') else require('http')
 
     http.get(url, (res) ->
       res.setEncoding('utf8')
