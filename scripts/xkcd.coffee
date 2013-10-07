@@ -31,7 +31,10 @@ module.exports = (robot) ->
         if (title)
           title = title[0].match(/>.+</)[0]
           title = title.slice(1).slice(0, -1)
-          msg.send("(oozou) #{title}")
+
+          unless title.match(/not found/gi)
+            msg.send("(oozou) #{title}")
+
     .on 'error', (e) ->
       console.log("Got error: " + e.message)
 
