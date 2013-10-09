@@ -20,9 +20,9 @@ module.exports = (robot) ->
           msg.send object.title
           msg.send object.img
 
-  robot.hear /(http[\:\/\w\-.]+)/i, (msg) ->
+  robot.hear /(http:[\/\w\-.]+)/i, (msg) ->
     url = msg.match[1]
-    http = if url.match(/^https/) then require('https') else require('http')
+    http = require('http')
 
     http.get url, (res) ->
       res.setEncoding('utf8')
