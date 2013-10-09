@@ -32,7 +32,7 @@ module.exports = (robot) ->
           title = title[0].match(/>.+</)[0]
           title = title.slice(1).slice(0, -1)
 
-          unless title.match(/not found/gi)
+          unless title.match(/(not found)|(Continuous Integration and Deployment)|(doesn't exist)/gi)
             msg.send("(oozou) #{title}")
 
     .on 'error', (e) ->
