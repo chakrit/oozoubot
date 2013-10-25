@@ -20,20 +20,23 @@ module.exports = (robot) ->
           msg.send object.title
           msg.send object.img
 
-  robot.hear /(http:\/\/pantip.com\/topic\/)(.+)/i, (msg) ->
-    topic_id = msg.match[2]
-    http = require('http');
+  robot.hear /(http:[\/\w\-.]+)/i, (msg) ->
+    url = msg.match[1]
+    http = require('http')
 
-    http.get("http://pantip.com/topic/#{topic_id}", (res) ->
+    http.get url, (res) ->
       res.setEncoding('utf8')
       res.on 'data', (data) ->
         title = data.match(/<title>.+<\/title>/)
         if (title)
           title = title[0].match(/>.+</)[0]
           title = title.slice(1).slice(0, -1)
-          msg.send(title)
-    ).on('error', (e) ->
-      msn.send("Got error: " + e.message))
+
+          unless title.match(/(not found)|(Continuous Integration and Deployment)|(doesn't exist)/gi)
+            msg.send("(oozou) #{title}")
+
+    .on 'error', (e) ->
+      console.log("Got error: " + e.message)
 
   robot.hear /(pivotaltracker\.com\/s\/projects\/)(.+)(\/stories\/)(.+)/i, (msg) ->
     project_id = msg.match[2]

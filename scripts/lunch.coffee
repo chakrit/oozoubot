@@ -63,12 +63,18 @@ module.exports = (robot) ->
         db.people.splice.call db.people, ind, 1
         db.left -= 1
         msg.send "Remove #{additions.join(', ')} from lunch"
-      else 
+      else
         msg.send "Oops, #{additions.join(', ')} hasn't been included in the lunch"
 
     if db.left is 0
+      if db.people.length > 0
+        output = for name, order of db.orders
+          "#{name}: #{order}"
+        msg.send "Well done! Here is your lunch:\n" + output.join("\n")
+      else
+        msg.send "Cancel lunch"
+
       db.ordering = false
-      msg.send 'Cancel lunch'
 
   robot.respond /(?:i'?ll have|have|haz|can haz) (.+)/i, (msg) ->
     db = robot.brain.data.lunch
