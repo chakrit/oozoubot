@@ -83,7 +83,7 @@ module.exports = (robot) ->
       return
     user = msg.message.user
     name = user.mention_name or "@#{user.name.split(' ')[0].toLowerCase()}"
-    db.orders[name] = msg.match[1]
+    db.orders[name] = "(mention_name: #{user.mention_name}) " + msg.match[1]
     db.people = (person for person in db.people when person isnt name)
     db.left   = db.people.length
     switch db.left
