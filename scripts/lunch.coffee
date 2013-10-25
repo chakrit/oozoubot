@@ -75,7 +75,8 @@ module.exports = (robot) ->
     unless db.ordering
       msg.send "I don't recall you are having lunch right now"
       return
-    name      = '@' + msg.message.user.name.split(' ')[0].toLowerCase()
+    user = msg.message.user
+    name = user.mention_name or "@#{user.name.split(' ')[0].toLowerCase()}"
     db.orders[name] = msg.match[1]
     db.people = (person for person in db.people when person isnt name)
     db.left   = db.people.length
