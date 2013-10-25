@@ -82,10 +82,13 @@ module.exports = (robot) ->
       msg.send "I don't recall you are having lunch right now"
       return
     user = msg.message.user
-    name = user.mention_name or "@#{user.name.split(' ')[0].toLowerCase()}"
-    db.orders[name] = "(mention_name: #{user.mention_name}) " + msg.match[1]
+    name = "@#{user.mention_name}" or "@#{user.name.split(' ')[0].toLowerCase()}"
+    db.orders[name] = msg.match[1]
     db.people = (person for person in db.people when person isnt name)
     db.left   = db.people.length
+
+    msg.send "Ok, #{msg.match[1]} for #{name}"
+
     switch db.left
       when 0
         output = for name, order of db.orders
