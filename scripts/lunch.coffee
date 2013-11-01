@@ -94,7 +94,7 @@ module.exports = (robot) ->
         output = for name, order of db.orders
           "#{name}: #{order}"
         msg.send "Well done! Here is your lunch:\n" + output.join("\n")
-        db.ordering = false
+        # db.ordering = false # so lunch don't get wiped senseless
       when 1
         msg.send "1 order to go, you can do it #{db.people[0]}, no pressure"
       when 2
